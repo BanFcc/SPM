@@ -33,8 +33,21 @@ class HtmlFile:
         self.cnt+=1
     def addText(self, text):
         self.changeString(text)
-        self.addNode(text,1)
-
+        self.addNode(text, 1)
+    def writeHead(self, title, css):
+        res = []
+        res.append("<head>")
+        res.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />")
+        res.append("<title>" + title + "</title>")
+        res.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"materials/"+css+"\" />")
+    def creatFile(self, fileName):
+        fp = open(fileName + ".html", w)
+        fp.write("<html xmlns=\" http: // www.w3.org / 1999 / xhtml \">" + "\n")
+        fp.writelines(self.writeHead(self.title, "myCss.css"))
+        
+        fp.close()
+        
+        
 
 
         
