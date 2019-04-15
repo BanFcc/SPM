@@ -74,8 +74,9 @@ class HtmlFile:
         fp = open(fileName + ".html", w)
         fp.write("<html xmlns=\" http: // www.w3.org / 1999 / xhtml \">" + "\n")
         fp.writelines(self.writeHead(self.title, "myCss.css"))
-        for node in webSite:
+        for node in self.webSite:
             fp.writelines(self.dfs(node, 0))
+    
         fp.close()
         
         
