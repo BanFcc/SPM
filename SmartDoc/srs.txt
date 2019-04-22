@@ -1,0 +1,21 @@
+@Requirement [id=rq1] [description=???]
+ Rationale  [id=ra1???] [description=???]
+ TestCase   [id=tc???] [description=???]
+ Priority   [Low/Medium/High]
+
+
+@Requirement [id=rq2] [description=???]
+ Rationale  [id=ra1???] [description=???]
+ TestCase   [id=tc???] [description=???]
+ Priority   [Low/Medium/High]
+
+
+@Requirement [id=rq3] [description=???]
+ Rationale  [id=ra1???] [description=???]
+ TestCase   [id=tc???] [description=???]
+ Priority   [Low/Medium/High]
+
+@Requirement [id=rq4] [description=???]
+ Rationale  [id=ra1???] [description=???]
+ TestCase   [id=tc???] [description=???]
+ Priority   [Low/Medium/High]
