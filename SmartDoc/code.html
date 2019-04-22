@@ -1,0 +1,151 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>code</title>
+</head>
+<body>
+<p># Copyright (C) 2019 Hui Lan
+</p>
+<p># The following line fixes SyntaxError: Non-UTF-8 code starting with ...
+</p>
+<p># coding=utf8
+</p>
+<p>
+</p>
+<p>import string
+</p>
+<span>#</span>
+<a id=" rq1" href=srs.html/ rq1">{see rq1}</a>
+<p></p>
+<p>def remove_punctuation(s):
+</p>
+<p>    p = ',.:¡¯¡°¡±' + string.punctuation
+</p>
+<p>    t = ''
+</p>
+<p>    for c in s:
+</p>
+<p>        if not c in p:
+</p>
+<p>            t += c
+</p>
+<p>        elif c == '¡¯': # handle the case such as May¡¯s
+</p>
+<p>            return t
+</p>
+<p>    return t
+</p>
+<span>#</span>
+<a id=" rq2" href=srs.html/ rq2">{see rq2}</a>
+<p></p>
+<p>def file2lst(fname):
+</p>
+<p>    ''' Return a list where each element is a word from fname. '''
+</p>
+<p>    L = []
+</p>
+<p>    f = open(fname)
+</p>
+<p>    for line in f:
+</p>
+<p>        line = line.strip()
+</p>
+<p>        lst = line.split()
+</p>
+<p>        for x in lst:
+</p>
+<p>            L.append(x)
+</p>
+<p>    f.close()
+</p>
+<p>    return L
+</p>
+<span>#</span>
+<a id=" rq3" href=srs.html/ rq3">{see rq3}</a>
+<p></p>
+<p>def lst2dict(lst):
+</p>
+<p>    ''' Return a dictionary given list lst.  Each key is an element in the lst.
+</p>
+<p>    The value is always 1.'''
+</p>
+<p>    d = {}
+</p>
+<p>    for w in lst:
+</p>
+<p>        d[w] = 1 
+</p>
+<p>    return d
+</p>
+<p>
+</p>
+<span>#</span>
+<a id=" rq4" href=srs.html/ rq4">{see rq4}</a>
+<p></p>
+<p>class WordFreq:
+</p>
+<p>    
+</p>
+<p>    def __init__(self, filename, english_dictionary):
+</p>
+<p>        self.ed = english_dictionary
+</p>
+<p>        self.fname = filename
+</p>
+<p>        self.freq_lst = None
+</p>
+<p>    
+</p>
+<p>    
+</p>
+<p>    def get_word_frequency(self):
+</p>
+<p>        ''' 
+</p>
+<p>        Assign the attribute freq_lst with a list of tuples, in the following form:
+</p>
+<p>        [('the', 55), ('and', 19), ('to', 19), ('of', 16), ('on', 15), ('may', 13), ('deal', 13)]
+</p>
+<p>        '''
+</p>
+<p>        self.freq_lst = [] # modify this such that it becomes something like  [('the', 55), ('and', 19), ('to', 19), ('of', 16)]
+</p>
+<p>
+</p>
+<p>    
+</p>
+<p>    def __str__(self):
+</p>
+<p>        s = ''
+</p>
+<p>        # Insert your code here
+</p>
+<p>        return s
+</p>
+<p>    
+</p>
+<p>
+</p>
+<p>if __name__ == '__main__':    
+</p>
+<p>    ed = lst2dict(file2lst('words.txt')) # from http://greenteapress.com/thinkpython2/code/words.txt
+</p>
+<p>    wf = WordFreq('brexit-news.txt', ed)
+</p>
+<p>    print(wf) # this statement will print something as follows.
+</p>
+<p>    #the (55)
+</p>
+<p>    #and (19)
+</p>
+<p>    #to (19)
+</p>
+<p>    #of (16)
+</p>
+<p>    #on (15)
+</p>
+<p>    #may (13)
+</p>
+<p>    #deal (13)</p>
+</body>
+</html>

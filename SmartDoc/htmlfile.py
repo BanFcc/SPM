@@ -39,14 +39,13 @@ class HtmlFile:
         self.webSite.append(self.Node(info, self.cnt + 1, flag, Id))
         self.cnt += 1
 
-    def AddText(self, text):
+    def AddText(self, text,Id=False):
         self.ChangeString(text)
-        self.AddNode(text, 1)
+        self.AddNode(text, 1,Id)
 
     def AddUrl(self, text, url, Id=""):
         self.ChangeString(text)
         self.AddNode((text, url), 2,Id)
-
         
     def WriteHead(self, title, css):
         res = []
@@ -59,9 +58,10 @@ class HtmlFile:
 
     def WriteText(self, textNode):
         res = []
-        res.append(r'<div id="left">')
-        res.append(r'<p>' + textNode.info + r'</p>')
-        res.append(r'</div>')
+        if textNode.Id==False:
+            res.append(r'<span>' + textNode.info + r'</span>')
+        else:
+            res.append(r'<p>' + textNode.info + r'</p>')
         return res
 
     def WriteUrl(self, urlNode):
@@ -96,7 +96,7 @@ class HtmlFile:
         fp.write(r'</body>'+'\n')
         fp.write(r'</html>'+'\n')
         fp.close()
-if if __name__ == "__main__":
+if __name__ == "__main__":
     pass
 
 
