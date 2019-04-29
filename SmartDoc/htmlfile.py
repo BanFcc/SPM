@@ -5,11 +5,11 @@ textFlag = 1
 urlFlag = 2
 
 class HtmlFile:
-    def ChangeString(self,str):
+    def ChangeString(self,text):
         newStr = ""
-        for c in str:
+        for c in text:
             if c == ' ':
-                newStr += "&nbsp;"
+                newStr += "&ensp;"
             elif c=='"':
                 newStr += "&quot;"
             elif c == "&":
@@ -20,7 +20,7 @@ class HtmlFile:
                 newStr += "&gt;"
             else:
                 newStr+=c
-        str = newStr
+        return newStr
         
     class Node:
         def __init__(self, info, idx, flag, Id=""):  #flag=1 文本  flag=2超链接 
@@ -39,12 +39,14 @@ class HtmlFile:
         self.webSite.append(self.Node(info, self.cnt + 1, flag, Id))
         self.cnt += 1
 
-    def AddText(self, text,Id=False):
-        self.ChangeString(text)
+    def AddText(self, text, Id=False):
+        #print(text)
+        text = self.ChangeString(text)
+      #  print("- "+text)
         self.AddNode(text, 1,Id)
 
     def AddUrl(self, text, url, Id=""):
-        self.ChangeString(text)
+        text=self.ChangeString(text)
         self.AddNode((text, url), 2,Id)
         
     def WriteHead(self, title, css):
@@ -69,8 +71,8 @@ class HtmlFile:
         res = []
         s = r'<a '
         if urlNode.Id!="":
-            s += r'id="' + urlNode.Id + r'" '
-        s +=r'href=' +urlNode.info[1] + r'">' + urlNode.info[0] + r'</a>'
+            s += r'name="' + urlNode.Id + r'" '
+        s +=r'href="' +urlNode.info[1] + r'">' + urlNode.info[0] + r'</a>'
         res.append(s)
         return res
     
@@ -86,7 +88,7 @@ class HtmlFile:
         for s in lines:
             fp.write(s+'\n')
     def CreatFile(self, fileName):
-        fp = open(fileName + r'.html','w')
+        fp = open(fileName + r'.html','w',encoding='UTF-8')
         fp.write(r'<html>' + "\n")
         
         self.WirtLinesln(fp,self.WriteHead(self.title,"myCss.css"))
