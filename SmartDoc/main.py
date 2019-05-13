@@ -66,14 +66,19 @@ def CreatCodeHtml(codeName, html,link):
        # print(s)
         WriteToCodeHtml(s, html,link)
         
-
+def GetName(fileName):
+    pos = fileName.find('.')
+    if pos >= 0:
+        fileName = fileName[:pos]
+    return fileName
+        
 
 if __name__ == '__main__':
     srsName = input()
     codeName = input()
     codeHtml = htmlfile.HtmlFile("code")
     srsHtml = htmlfile.HtmlFile("srs")
-    CreatSrsHtml(srsName, srsHtml,"code.html")
-    CreatCodeHtml(codeName, codeHtml,"srs.html")
-    codeHtml.CreatFile("code")
-    srsHtml.CreatFile("srs")
+    CreatSrsHtml(srsName, srsHtml, GetName(codeName) + ".html")
+    CreatCodeHtml(codeName, codeHtml, GetName(srsName) + ".html")
+    codeHtml.CreatFile( GetName(codeName))
+    srsHtml.CreatFile(GetName(srsName))
