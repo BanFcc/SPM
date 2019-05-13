@@ -9,7 +9,7 @@ The output will be SRS.html and code.html, which are meant to help
 software maintainer to easily find a corresponding requirement (in
 SRS.html) by clicking a link in the converted source code, code.html.
 
-source:(http://lanlab.org/course/2019s/spm/smartdoc.txt)
+source:http://lanlab.org/course/2019s/spm/smartdoc.txt
 
 ### How do you use it?
 
