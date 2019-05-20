@@ -10,16 +10,16 @@ class HtmlFile:
         for c in text:
             if c == ' ':
                 newStr += "&ensp;"
-            elif c=='"':
+            elif c == '"':
                 newStr += "&quot;"
             elif c == "&":
                 newStr += "&amp;"
-            elif c=='<':
+            elif c == '<':
                 newStr += "&lt;"
             elif c == '>':
                 newStr += "&gt;"
             else:
-                newStr+=c
+                newStr += c
         return newStr
         
     class Node:
@@ -86,17 +86,21 @@ class HtmlFile:
             return self.WriteUrl(node)
     def WirtLinesln(self,fp,lines):
         for s in lines:
-            fp.write(s+'\n')
-    def CreatFile(self, fileName):
-        fp = open(fileName + r'.html','w',encoding='UTF-8')
-        fp.write(r'<html>' + "\n")
+            fp.write(s + '\n')
+    def CreatMatrix(matrix):
+        pass
         
-        self.WirtLinesln(fp,self.WriteHead(self.title,"myCss.css"))
-        fp.write(r'<body>'+'\n')
+
+    def CreatFile(self, fileName):
+        fp = open(fileName + r'.html', 'w', encoding='UTF-8')
+        fp.write(r'<html>' + "\n")
+        self.WirtLinesln(fp, self.WriteHead(self.title, "myCss.css"))       
+        fp.write(r'<body>' + '\n')          
         for node in self.webSite:
             self.WirtLinesln(fp,self.WriteNode(node))
-        fp.write(r'</body>'+'\n')
-        fp.write(r'</html>'+'\n')
+        fp.write(r'</body>' + '\n')    
+        fp.write(r'</html>' + '\n')
+            
         fp.close()
 if __name__ == "__main__":
     pass
