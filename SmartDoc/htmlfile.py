@@ -47,7 +47,10 @@ class HtmlFile:
 
     def AddUrl(self, text, url, Id=""):
         text=self.ChangeString(text)
-        self.AddNode((text, url), 2,Id)
+        self.AddNode((text, url), 2, Id)
+    
+    def CreatMatrix(self, matrix):
+        self.AddNode(matrix,3)
         
     def WriteHead(self, title, css):
         res = []
@@ -72,10 +75,18 @@ class HtmlFile:
         s = r'<a '
         if urlNode.Id!="":
             s += r'name="' + urlNode.Id + r'" '
-        s +=r'href="' +urlNode.info[1] + r'">' + urlNode.info[0] + r'</a>'
+        s += r'href="' + urlNode.info[1] + r'">' + urlNode.info[0] + r'</a>'
         res.append(s)
         return res
-    
+    def WriteMatrix(self, matrixNode):
+        res = []
+        res.append(r'<table border="1">')
+        for row in matrixNode.info:
+            res.append(r'<tr>')
+            for item in row:
+                res.append(r'<td>'+self.ChangeString(item)+r'</td>')
+            res.append(r'</tr>')
+        return res
     def Dfs(self, node, num):
         for v in node.son:
             self.Dfs(v, num + 2)
@@ -84,12 +95,11 @@ class HtmlFile:
             return self.WriteText(node)
         elif node.flag==2:
             return self.WriteUrl(node)
+        elif node.flag == 3:
+            return self.WriteMatrix(node)
     def WirtLinesln(self,fp,lines):
         for s in lines:
             fp.write(s + '\n')
-    def CreatMatrix(matrix):
-        pass
-        
 
     def CreatFile(self, fileName):
         fp = open(fileName + r'.html', 'w', encoding='UTF-8')

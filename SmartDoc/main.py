@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import htmlfile
-traceability_matrix = []
-row = []
+Requirement = []
+Rationale = []
+TestCase = []
 def RemoveSpace(s):
     res=""
     for c in s:
@@ -30,27 +31,57 @@ def WriteToCodeHtml(s, html,link):
         html.AddText(s[ve[-1][1]+1:-1],True)
 def WriteToSrsHtml(s,html,link):
     le=len(s)
-    flag=False
+    srq='@Requirement'
+    sra='Rationale'
+    stc='TestCase'
+    frq=False
+    fra=False
+    ftc=False
     lst=-1
-    ve=[]
+    rq=[]
+    ra=[]
+    tc=[]
+   # print(s)
     for i in range(le):
-        if i+12<le and s[i:i+12]=='@Requirement':
-            flag=True
+        if i+len(srq)<le and s[i:i+len(srq)]==srq:
+            frq=True
+        if i+len(sra)<le and s[i:i+len(sra)]==sra:
+            fra=True
+        if i+len(stc)<le and s[i:i+len(stc)]==stc:
+            ftc=True
         if s[i]=='[':
             lst=i
         elif s[i]==']':
-            if s[lst+1:lst+4]=='id=' and flag:
-                ve.append((lst,i))
+            if s[lst+1:lst+4]=='id=':
+                if frq:
+                    rq.append((lst,i))
+                    frq=False
+                elif fra:
+                    ra.append((lst,i))
+                    fra=False
+                elif ftc:
+                    tc.append((lst,i))
+                    ftc=False
+            
+        
     lst=-1
-    for rg in ve:
+    for rg in rq:
         html.AddText(s[lst + 1:rg[0]])
         name = RemoveSpace(s[rg[0] + 4:rg[1]])
-        row.append(name)
+        Requirement.append(name)
         html.AddUrl(s[rg[0]:rg[1]+1],link+r'#'+name,name)
-    if len(ve)==0:
+    if len(rq)==0:
         html.AddText(s,False)
     else:
-        html.AddText(s[ve[-1][1]+1:-1],False)
+        html.AddText(s[rq[-1][1] + 1:-1], False)
+    for rg in ra:
+        name = RemoveSpace(s[rg[0] + 4:rg[1]])
+        Rationale.append(name)
+    for rg in tc:
+       # print(rg)
+        name = RemoveSpace(s[rg[0] + 4:rg[1]])
+        TestCase.append(name)
+    
     html.AddText("",True)
 def CreatSrsHtml(fileName, html,link):
     f = open(fileName, "r", encoding='UTF-8')
@@ -74,26 +105,34 @@ def GetName(fileName):
     if pos >= 0:
         fileName = fileName[:pos]
     return fileName
-def GetMatrix():
-    traceability_matrix.append([""].extend[row])
-    for i in range(len(row)):
+
+def GetMatrix(row,col):
+    tmp=[""]
+    tmp.extend(row)
+    matrix=[]
+    matrix.append(tmp)
+ #   print(len(row))
+    for i in range(len(col)):
         tmp = []
-        tmp.append(row[i])
+        tmp.append(col[i])
         for j in range(len(row)):
-            if i == j:
-                tmp.append[True]
-            else:
-                tmp.append[""]
-            traceability_matrix.append[tmp]
-            
+            tmp.append(" ")
+        matrix.append(tmp)
+  #  for r in matrix:
+  #      print(r)
+    return matrix
+
 if __name__ == '__main__':
     srsName = input()
     codeName = input()
+  #  srsName='srs.txt'
+  #  codeName='code.py'
     codeHtml = htmlfile.HtmlFile("code")
     srsHtml = htmlfile.HtmlFile("srs")
     CreatSrsHtml(srsName, srsHtml, GetName(codeName) + ".html")
     CreatCodeHtml(codeName, codeHtml, GetName(srsName) + ".html")
-    GetMatrix()
-    srsHtml.CreatMatrix(traceability_matrix)
+    srsHtml.CreatMatrix(GetMatrix(Requirement, Requirement))
+    srsHtml.CreatMatrix(GetMatrix(Rationale, Requirement))
+    srsHtml.CreatMatrix(GetMatrix(TestCase, Requirement))
     codeHtml.CreatFile(GetName(codeName))
     srsHtml.CreatFile(GetName(srsName))
