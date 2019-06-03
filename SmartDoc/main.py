@@ -10,33 +10,35 @@ def RemoveSpace(s):
             continue
         res+=c
     return res
-def WriteToCodeHtml(s, html,link):
-    le=len(s)
-    lst=-1
-    ve=[]
+def WriteToCodeHtml(s, html, link):
+    le = len(s)
+    lst = -1
+    ve = []
     for i in range(le):
-        if s[i]=='{':
-            lst=i
-        elif s[i]=='}':
-            if s[lst+1:lst+4]=='see':
-                ve.append((lst,i))
+        if s[i] == '{':
+            lst = i
+        elif s[i] == '}':
+            if s[lst + 1:lst + 4] == 'see': 
+                ve.append((lst, i))
+                lst=-1
+                
     lst=-1
     for rg in ve:
-        html.AddText(s[lst+1:rg[0]])
-        name=RemoveSpace(s[rg[0]+4:rg[1]])
-        html.AddUrl(s[rg[0]:rg[1]+1],link+r'#'+name,name)
-    if len(ve)==0:
+        html.AddText(s[lst + 1:rg[0]])
+        name = RemoveSpace(s[rg[0] + 4:rg[1]])
+        html.AddUrl(s[rg[0]:rg[1] + 1], link + r'#' + name, name)
+    if len(ve) == 0:
         html.AddText(s,True)
     else:
-        html.AddText(s[ve[-1][1]+1:-1],True)
+        html.AddText(s[ve[-1][1] + 1:-1], True)
 def WriteToSrsHtml(s,html,link):
     le=len(s)
     srq='@Requirement'
     sra='Rationale'
     stc='TestCase'
-    frq=False
-    fra=False
-    ftc=False
+    frq = False
+    fra = False
+    ftc = False
     lst=-1
     rq=[]
     ra=[]
@@ -54,23 +56,22 @@ def WriteToSrsHtml(s,html,link):
         elif s[i]==']':
             if s[lst+1:lst+4]=='id=':
                 if frq:
-                    rq.append((lst,i))
-                    frq=False
+                    rq.append((lst, i))
+                    frq = False
                 elif fra:
-                    ra.append((lst,i))
-                    fra=False
+                    ra.append((lst, i))
+                    fra = False 
                 elif ftc:
-                    tc.append((lst,i))
-                    ftc=False
-            
-        
+                    tc.append((lst, i))
+                    ftc = False
+                lst=-1      
     lst=-1
     for rg in rq:
         html.AddText(s[lst + 1:rg[0]])
         name = RemoveSpace(s[rg[0] + 4:rg[1]])
         Requirement.append(name)
         html.AddUrl(s[rg[0]:rg[1]+1],link+r'#'+name,name)
-    if len(rq)==0:
+    if len(rq) == 0:
         html.AddText(s,False)
     else:
         html.AddText(s[rq[-1][1] + 1:-1], False)
@@ -82,8 +83,8 @@ def WriteToSrsHtml(s,html,link):
         name = RemoveSpace(s[rg[0] + 4:rg[1]])
         TestCase.append(name)
     
-    html.AddText("",True)
-def CreatSrsHtml(fileName, html,link):
+    html.AddText("", True)
+def CreatSrsHtml(fileName, html, link):
     f = open(fileName, "r", encoding='UTF-8')
     info = f.readlines()
     f.close()
